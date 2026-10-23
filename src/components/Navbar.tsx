@@ -46,7 +46,7 @@ function DownloadButton({ mobile }: { mobile?: boolean }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={cn(
-        'rounded-full text-white font-normal shrink-0 active:scale-[0.97]',
+        'rounded-full text-white font-normal shrink-0 active:scale-[0.97] shadow-[0_0_24px_rgba(139,92,246,0.4)]',
         mobile ? 'h-9 px-3.5 text-[13px]' : 'h-12 px-6 text-[16px]',
       )}
     >

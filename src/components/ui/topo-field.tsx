@@ -163,6 +163,10 @@ export type TopoFieldProps = {
   hue?: number;
   saturation?: number;
   brightness?: number;
+  /** Цвет топографических линий (hex) в тёмном режиме. По умолчанию белый. */
+  lineColor?: string;
+  /** Цвет сетки (hex) в тёмном режиме. По умолчанию белый. */
+  gridColor?: string;
   className?: string;
   style?: CSSProperties;
 };
@@ -171,6 +175,14 @@ const LIGHT_PAPER = "#eef1f6";
 
 function clamp(value: number, minimum: number, maximum: number) {
   return Math.min(maximum, Math.max(minimum, value));
+}
+
+/** "#a78bfa" → "vec3(0.655, 0.545, 0.980)" */
+function glslColor(hex: string) {
+  const value = hex.replace("#", "");
+  const full = value.length === 3 ? value.replace(/./g, "$&$&") : value;
+  const channels = [0, 2, 4].map((i) => parseInt(full.slice(i, i + 2), 16) / 255);
+  return `vec3(${channels.map((c) => glslFloat(c)).join(", ")})`;
 }
 
 /** WebGL1 GLSL ES requires float literals (10.0), not ints (10). */
@@ -225,7 +237,15 @@ function patchTopoField(
     length,
     density,
     mode,
-  }: { length: number; density: number; mode: TopoFieldMode },
+    lineColor,
+    gridColor,
+  }: {
+    length: number;
+    density: number;
+    mode: TopoFieldMode;
+    lineColor?: string;
+    gridColor?: string;
+  },
 ) {
   let next = source
     .replace(
@@ -236,6 +256,18 @@ function patchTopoField(
       "float numBands = 10.0;",
       `float numBands = ${glslFloat(10 * density, 2)};`,
     );
+  if (mode === "dark" && gridColor) {
+    next = next.replace(
+      "color += vec3(1.0) * gridLines;",
+      `color += ${glslColor(gridColor)} * gridLines;`,
+    );
+  }
+  if (mode === "dark" && lineColor) {
+    next = next.replace(
+      "color += vec3(1.0) * topoLines;",
+      `color += ${glslColor(lineColor)} * topoLines;`,
+    );
+  }
   if (mode === "light") {
     // Additive white-on-black does not invert cleanly — mix paper toward ink by line strength.
     next = next
@@ -264,6 +296,8 @@ function buildFocusedDocument(knobs: {
   mode: TopoFieldMode;
   length: number;
   density: number;
+  lineColor?: string;
+  gridColor?: string;
 }) {
   const background = knobs.mode === "light" ? LIGHT_PAPER : "#000000";
   const patched = patchTopoField(topoFieldSource, knobs);
@@ -363,6 +397,8 @@ export default function TopoField({
   hue = 0,
   saturation = 1,
   brightness = 1,
+  lineColor,
+  gridColor,
   className,
   style,
 }: TopoFieldProps) {
@@ -387,8 +423,10 @@ export default function TopoField({
         mode: resolvedMode,
         length: safeLength,
         density: safeDensity,
+        lineColor,
+        gridColor,
       }),
-    [resolvedMode, safeLength, safeDensity],
+    [resolvedMode, safeLength, safeDensity, lineColor, gridColor],
   );
 
   const postControls = () => {

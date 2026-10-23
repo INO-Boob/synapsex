@@ -25,8 +25,8 @@ export function Architecture() {
         <ol className="mt-20 flex flex-col items-center">
           {LAYERS.map((l, i) => (
             <li key={l.name} className="w-full max-w-md flex flex-col items-center">
-              {i > 0 && <span aria-hidden className="block w-px h-6 bg-gradient-to-b from-white/10 to-lilac" />}
-              <div className="w-full h-[72px] border border-white/10 bg-black/60 backdrop-blur-sm rounded-lg flex items-center justify-between px-6 text-left">
+              {i > 0 && <span aria-hidden className="block w-px h-6 bg-gradient-to-b from-violet-400/20 to-violet-400" />}
+              <div className="w-full h-[72px] border border-violet-300/15 bg-black/60 backdrop-blur-sm rounded-lg flex items-center justify-between px-6 text-left">
                 <span className="text-white/30 text-[12px] tracking-[0.04em]">Слой {i + 1}</span>
                 <span className="flex flex-col items-end">
                   <span className="text-white text-[16px] sm:text-[18px] font-light">{l.name}</span>
@@ -42,7 +42,7 @@ export function Architecture() {
             type="button"
             size="xl"
             onClick={openDownload}
-            className="rounded-full text-white font-normal text-[15px] sm:text-[16px]"
+            className="rounded-full text-white font-normal text-[15px] sm:text-[16px] shadow-[0_0_32px_rgba(139,92,246,0.45)]"
           >
             <span className="flex items-center gap-2">
               <i className="bi bi-apple" aria-hidden />

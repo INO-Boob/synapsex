@@ -28,7 +28,7 @@
   --destructive-foreground: 0 0% 100%;
   --border: 0 0% 18%;
   --input: 0 0% 20%;
-  --ring: 277 28% 85%;
+  --ring: 258 90% 76%;
 }
 
 * {
@@ -48,12 +48,12 @@ body {
 }
 
 ::selection {
-  background: #8e7f94;
+  background: #a78bfa;
   color: #000;
 }
 
 :focus-visible {
-  outline: 1.5px solid #d9cce3;
+  outline: 1.5px solid #c4a5ff;
   outline-offset: 3px;
 }
 
