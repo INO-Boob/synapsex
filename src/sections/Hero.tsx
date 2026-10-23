@@ -1,12 +1,15 @@
 import { motion } from 'framer-motion';
 import { ScrambleIn } from '../components/ScrambleIn';
-import { NeuralHuman } from '../components/NeuralHuman';
+import { ScrubVideo } from '../components/ScrubVideo';
+import { VIDEOS } from '../lib/media';
 
 const heading = 'text-white font-light leading-[0.95] tracking-[-0.03em] text-[clamp(40px,10vw,100px)]';
 
 export function Hero({ entranceComplete }: { entranceComplete: boolean }) {
   return (
     <section id="top" className="relative h-screen h-[100dvh] overflow-hidden bg-black">
+      <ScrubVideo src={VIDEOS.hero} className="absolute inset-0" />
+
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
         style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '24px 24px' }}
@@ -31,11 +34,6 @@ export function Hero({ entranceComplete }: { entranceComplete: boolean }) {
           Трансценденция
         </span>
       </div>
-
-      <NeuralHuman revealed={entranceComplete} className="absolute inset-0 w-full h-full" />
-
-      {/* Затемнение снизу, чтобы текст читался поверх фигуры */}
-      <div className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none bg-gradient-to-t from-black/80 via-black/30 to-transparent md:from-black/50" />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -62,16 +60,11 @@ export function Hero({ entranceComplete }: { entranceComplete: boolean }) {
             </motion.p>
           </div>
 
-          <div className="flex flex-col gap-4 md:items-end">
-            <p className="hidden md:block text-[12px] text-white/35 whitespace-nowrap">
-              Ведите мышью — фигура повернётся
-            </p>
-            <p className={`${heading} text-left md:text-right`}>
-              <ScrambleIn text="Одна" delay={700} triggered={entranceComplete} />
-              <br />
-              <ScrambleIn text="сеть" delay={1000} triggered={entranceComplete} />
-            </p>
-          </div>
+          <p className={`${heading} text-left md:text-right`}>
+            <ScrambleIn text="Одна" delay={700} triggered={entranceComplete} />
+            <br />
+            <ScrambleIn text="сеть" delay={1000} triggered={entranceComplete} />
+          </p>
         </div>
       </motion.div>
     </section>

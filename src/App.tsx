@@ -4,8 +4,7 @@ import { Hero } from './sections/Hero';
 import { Cinematic } from './sections/Cinematic';
 import { Metrics } from './sections/Metrics';
 import { Technology } from './sections/Technology';
-import { Architecture } from './sections/Architecture';
-import { Footer } from './sections/Footer';
+import { Closing } from './sections/Closing';
 
 export default function App() {
   const [entranceComplete, setEntranceComplete] = useState(false);
@@ -23,9 +22,8 @@ export default function App() {
         <Cinematic />
         <Metrics />
         <Technology />
-        <Architecture />
+        <Closing />
       </main>
-      <Footer />
     </div>
   );
 }

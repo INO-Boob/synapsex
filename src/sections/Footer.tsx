@@ -4,7 +4,7 @@ import { VIDEOS } from '../lib/media';
 
 export function Footer() {
   return (
-    <footer id="download" className="bg-black overflow-hidden">
+    <footer id="download" className="overflow-hidden">
       <div className="flex flex-col md:flex-row min-h-[400px]">
         <div className="relative w-full md:w-1/2 h-[300px] md:h-auto">
           <BackgroundVideo src={VIDEOS.footer} />

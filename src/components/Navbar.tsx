@@ -3,7 +3,9 @@ import { motion } from 'framer-motion';
 import { SynapseXLogo } from './SynapseXLogo';
 import { SquashHamburger } from './SquashHamburger';
 import { ScrambleText } from './ScrambleText';
-import { DOWNLOAD_URL } from '../lib/media';
+import { openDownload } from '../lib/download';
+import { LiquidButton } from '@/components/ui/liquid-glass-button';
+import { cn } from '@/lib/utils';
 
 const spring = { type: 'spring', stiffness: 350, damping: 28 } as const;
 
@@ -38,19 +40,21 @@ function NavLink({ label, onClick, mobile, focusable }: { label: string; onClick
 function DownloadButton({ mobile }: { mobile?: boolean }) {
   const [hovered, setHovered] = useState(false);
   return (
-    <motion.a
-      href={DOWNLOAD_URL}
+    <LiquidButton
+      type="button"
+      onClick={openDownload}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      whileHover={{ scale: 1.03, backgroundColor: '#e2e2e6' }}
-      whileTap={{ scale: 0.97 }}
-      className={`${
-        mobile ? 'h-9 px-3.5 text-[13px] gap-1.5' : 'h-12 px-6 text-[16px] gap-2'
-      } bg-white text-black rounded-full flex items-center shrink-0`}
+      className={cn(
+        'rounded-full text-white font-normal shrink-0 active:scale-[0.97]',
+        mobile ? 'h-9 px-3.5 text-[13px]' : 'h-12 px-6 text-[16px]',
+      )}
     >
-      <i className="bi bi-apple" aria-hidden />
-      <ScrambleText text="Скачать" isHovered={hovered} />
-    </motion.a>
+      <span className={cn('flex items-center', mobile ? 'gap-1.5' : 'gap-2')}>
+        <i className="bi bi-apple" aria-hidden />
+        <ScrambleText text="Скачать" isHovered={hovered} />
+      </span>
+    </LiquidButton>
   );
 }
 
